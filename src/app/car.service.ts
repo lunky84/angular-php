@@ -33,6 +33,21 @@ export class CarService {
       catchError(this.handleError));
   }
 
+  update(car: Car): Observable<Car[]> {
+    return this.http.put(`${this.baseUrl}/update`, { data: car })
+      .pipe(map((res) => {
+        const theCar = this.cars.find((item) => {
+          return +item['id'] === +car['id'];
+        });
+        if (theCar) {
+          theCar['price'] = +car['price'];
+          theCar['model'] = car['model'];
+        }
+        return this.cars;
+      }),
+      catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
 
