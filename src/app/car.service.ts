@@ -24,6 +24,15 @@ export class CarService {
     catchError(this.handleError));
   }
 
+  store(car: Car): Observable<Car[]> {
+    return this.http.post(`${this.baseUrl}/store`, { data: car })
+      .pipe(map((res) => {
+        this.cars.push(res['data']);
+        return this.cars;
+      }),
+      catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     console.log(error);
 
