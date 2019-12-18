@@ -66,4 +66,18 @@ export class AppComponent implements OnInit {
       );
   }
 
+  deleteCar(id) {
+    this.success = '';
+    this.error   = '';
+
+    this.carService.delete(+id)
+      .subscribe(
+        (res: Car[]) => {
+          this.cars = res;
+          this.success = 'Deleted successfully';
+        },
+        (err) => this.error = err
+      );
+  }
+
 }
